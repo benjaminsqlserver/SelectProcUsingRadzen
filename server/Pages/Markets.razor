@@ -1,0 +1,38 @@
+﻿@page "/"
+@page "/markets"
+@layout MainLayout
+@inherits SelectStoredProcedureRadzen.Pages.MarketsComponent
+
+@using Radzen
+@using Radzen.Blazor
+@using SelectStoredProcedureRadzen.Models.ConData
+<RadzenContent Container="main">
+  <ChildContent>
+    <RadzenHeading Size="H1" Text="Markets">
+    </RadzenHeading>
+    <div class="row">
+      <div class="col-md-12">
+        <RadzenButton Icon="add_circle_outline" style="margin-bottom: 10px" Text="Add" Click="@Button0Click">
+        </RadzenButton>
+        <RadzenGrid @ref="grid0" AllowFiltering="true" AllowPaging="true" AllowSorting="true" Data="@getMarketsResult" TItem="SelectStoredProcedureRadzen.Models.ConData.Market" RowSelect="@Grid0RowSelect">
+          <Columns>
+            <RadzenGridColumn TItem="SelectStoredProcedureRadzen.Models.ConData.Market" Property="MarketListID" Title="Market List ID">
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="SelectStoredProcedureRadzen.Models.ConData.Market" Property="MarketName" Title="Market Name">
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="SelectStoredProcedureRadzen.Models.ConData.Market" Property="MarketLocation" Title="Market Location">
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="SelectStoredProcedureRadzen.Models.ConData.Market" Property="MarketSizeInHectares" Title="Market Size In Hectares">
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="SelectStoredProcedureRadzen.Models.ConData.Market" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="70px">
+              <Template Context="selectStoredProcedureRadzenModelsConDataMarket">
+                <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="close" Size="ButtonSize.Small" Click="@((args) =>GridDeleteButtonClick(args, selectStoredProcedureRadzenModelsConDataMarket))" @onclick:stopPropagation="true">
+                </RadzenButton>
+              </Template>
+            </RadzenGridColumn>
+          </Columns>
+        </RadzenGrid>
+      </div>
+    </div>
+  </ChildContent>
+</RadzenContent>

@@ -1,0 +1,26 @@
+{
+  "dataSources": [
+    "conData"
+  ],
+  "generator": "@radzen/blazor-server",
+  "https": false,
+  "layouts": [
+    "Login",
+    "Main"
+  ],
+  "logo": "",
+  "name": "SelectStoredProcedureRadzen",
+  "navigation": [
+    "Markets"
+  ],
+  "pages": [
+    "Markets",
+    "Add Market",
+    "Edit Market"
+  ],
+  "serverLang": "cs",
+  "serverProject": true,
+  "serverVersion": "3",
+  "startPage": "Markets",
+  "theme": "default"
+}

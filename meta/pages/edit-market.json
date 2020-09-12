@@ -1,0 +1,253 @@
+{
+  "components": [
+    {
+      "type": "content",
+      "container": "main",
+      "components": [
+        {
+          "type": "row",
+          "components": [
+            {
+              "type": "col",
+              "class": "col-md-12",
+              "components": [
+                {
+                  "type": "template-form",
+                  "name": "form0",
+                  "components": [
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Market Name",
+                              "component": "MarketName",
+                              "name": "MarketNameLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "string",
+                              "maxLength": 300,
+                              "type": "textbox",
+                              "name": "MarketName",
+                              "style": {
+                                "display": "block",
+                                "width": "100%"
+                              },
+                              "value": "${market.MarketName}"
+                            },
+                            {
+                              "type": "required-validator",
+                              "name": "MarketNameRequiredValidator",
+                              "component": "MarketName",
+                              "text": "MarketName is required",
+                              "style": {
+                                "position": "absolute"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Market Location",
+                              "component": "MarketLocation",
+                              "name": "MarketLocationLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "string",
+                              "maxLength": 100,
+                              "type": "textbox",
+                              "name": "MarketLocation",
+                              "style": {
+                                "display": "block",
+                                "width": "100%"
+                              },
+                              "value": "${market.MarketLocation}"
+                            },
+                            {
+                              "type": "required-validator",
+                              "name": "MarketLocationRequiredValidator",
+                              "component": "MarketLocation",
+                              "text": "MarketLocation is required",
+                              "style": {
+                                "position": "absolute"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Market Size In Hectares",
+                              "component": "MarketSizeInHectares",
+                              "name": "MarketSizeInHectaresLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "decimal?",
+                              "type": "numeric",
+                              "name": "MarketSizeInHectares",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${market.MarketSizeInHectares}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col offset-sm-3",
+                          "components": [
+                            {
+                              "type": "button",
+                              "buttonType": "submit",
+                              "icon": "save",
+                              "text": "Save",
+                              "buttonStyle": "primary"
+                            },
+                            {
+                              "type": "button",
+                              "buttonStyle": "light",
+                              "text": "Cancel",
+                              "events": {
+                                "click": [
+                                  {
+                                    "type": "close-popup"
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ],
+                  "events": {
+                    "submit": [
+                      {
+                        "error": [
+                          {
+                            "detail": "Unable to update Market",
+                            "severity": "error",
+                            "summary": "Error",
+                            "type": "notify"
+                          }
+                        ],
+                        "name": "conData.updateMarket",
+                        "parameters": [
+                          {
+                            "name": "MarketListID",
+                            "value": "${parameters.MarketListID}"
+                          },
+                          {
+                            "name": "Market",
+                            "value": "${market}"
+                          }
+                        ],
+                        "then": [
+                          {
+                            "type": "close-popup",
+                            "result": "${market}"
+                          }
+                        ],
+                        "type": "invoke"
+                      }
+                    ]
+                  },
+                  "itemType": "SelectStoredProcedureRadzen.Models.ConData.Market",
+                  "data": "${market}",
+                  "visible": "${market != null}"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "events": {
+    "load": [
+      {
+        "name": "conData.getMarketByMarketListID",
+        "parameters": [
+          {
+            "name": "MarketListID",
+            "value": "${parameters.MarketListID}"
+          }
+        ],
+        "then": [
+          {
+            "name": "market",
+            "type": "set",
+            "value": "${result}",
+            "valueType": "SelectStoredProcedureRadzen.Models.ConData.Market"
+          }
+        ],
+        "error": [],
+        "type": "invoke"
+      }
+    ]
+  },
+  "name": "Edit Market",
+  "layout": "Main"
+}

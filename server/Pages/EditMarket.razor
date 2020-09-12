@@ -1,0 +1,61 @@
+﻿@page "/edit-market/{MarketListID}"
+@layout MainLayout
+@inherits SelectStoredProcedureRadzen.Pages.EditMarketComponent
+
+@using Radzen
+@using Radzen.Blazor
+@using SelectStoredProcedureRadzen.Models.ConData
+<RadzenContent Container="main">
+  <ChildContent>
+    <div class="row">
+      <div class="col-md-12">
+        <RadzenTemplateForm TItem="SelectStoredProcedureRadzen.Models.ConData.Market" Data="@market" Visible="@(market != null)" Submit="@Form0Submit">
+          <ChildContent>
+            <div style="margin-bottom: 1rem" class="row">
+              <div class="col-md-3">
+                <RadzenLabel Text="Market Name" Component="MarketName" style="width: 100%">
+                </RadzenLabel>
+              </div>
+              <div class="col-md-9">
+                <RadzenTextBox MaxLength="300" style="display: block; width: 100%" @bind-Value="@(market.MarketName)" Name="MarketName">
+                </RadzenTextBox>
+                <RadzenRequiredValidator Component="MarketName" Text="MarketName is required" style="position: absolute">
+                </RadzenRequiredValidator>
+              </div>
+            </div>
+            <div style="margin-bottom: 1rem" class="row">
+              <div class="col-md-3">
+                <RadzenLabel Text="Market Location" Component="MarketLocation" style="width: 100%">
+                </RadzenLabel>
+              </div>
+              <div class="col-md-9">
+                <RadzenTextBox MaxLength="100" style="display: block; width: 100%" @bind-Value="@(market.MarketLocation)" Name="MarketLocation">
+                </RadzenTextBox>
+                <RadzenRequiredValidator Component="MarketLocation" Text="MarketLocation is required" style="position: absolute">
+                </RadzenRequiredValidator>
+              </div>
+            </div>
+            <div style="margin-bottom: 1rem" class="row">
+              <div class="col-md-3">
+                <RadzenLabel Text="Market Size In Hectares" Component="MarketSizeInHectares" style="width: 100%">
+                </RadzenLabel>
+              </div>
+              <div class="col-md-9">
+                <RadzenNumeric style="width: 100%" @bind-Value="@(market.MarketSizeInHectares)" Name="MarketSizeInHectares">
+                </RadzenNumeric>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col offset-sm-3">
+                <RadzenButton ButtonType="ButtonType.Submit" Icon="save" Text="Save" ButtonStyle="ButtonStyle.Primary">
+                </RadzenButton>
+                <RadzenButton ButtonStyle="ButtonStyle.Light" Text="Cancel" Click="@Button2Click">
+                </RadzenButton>
+              </div>
+            </div>
+          </ChildContent>
+        </RadzenTemplateForm>
+      </div>
+    </div>
+  </ChildContent>
+</RadzenContent>

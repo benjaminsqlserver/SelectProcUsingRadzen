@@ -1,0 +1,369 @@
+{
+  "info": {
+    "title": "conData",
+    "x-type": "odata",
+    "x-connector": "mssql",
+    "x-connector-version": 15
+  },
+  "definitions": {
+    "Market": {
+      "x-table": "dbo.Markets",
+      "resource": "Markets",
+      "required": [
+        "MarketName",
+        "MarketLocation"
+      ],
+      "properties": {
+        "MarketListID": {
+          "x-key": true,
+          "x-identity": true,
+          "x-nullable": false,
+          "type": "integer"
+        },
+        "MarketName": {
+          "x-nullable": false,
+          "type": "string",
+          "length": 300
+        },
+        "MarketLocation": {
+          "x-nullable": false,
+          "type": "string",
+          "length": 100
+        },
+        "MarketSizeInHectares": {
+          "type": "number",
+          "format": "decimal"
+        }
+      }
+    },
+    "MuyikInsertNewMarket": {
+      "x-view": "sp",
+      "x-table": "dbo.MuyikInsertNewMarket",
+      "x-parameters": [
+        {
+          "name": "MarketLocation",
+          "type": "string",
+          "size": 200
+        },
+        {
+          "name": "MarketName",
+          "type": "string",
+          "size": 600
+        },
+        {
+          "name": "MarketSizeInHectares",
+          "type": "number",
+          "format": "decimal"
+        }
+      ],
+      "resource": "MuyikInsertNewMarkets",
+      "properties": {}
+    },
+    "SelectAllMarket": {
+      "x-view": "sp",
+      "x-table": "dbo.SelectAllMarkets",
+      "resource": "SelectAllMarkets",
+      "required": [
+        "MarketListID",
+        "MarketName",
+        "MarketLocation"
+      ],
+      "properties": {
+        "MarketListID": {
+          "x-key": true,
+          "x-nullable": false,
+          "type": "integer",
+          "x-virtual": true
+        },
+        "MarketName": {
+          "x-nullable": false,
+          "type": "string",
+          "length": 600
+        },
+        "MarketLocation": {
+          "x-nullable": false,
+          "type": "string",
+          "length": 200
+        },
+        "MarketSizeInHectares": {
+          "type": "number",
+          "format": "decimal"
+        }
+      }
+    }
+  },
+  "paths": {
+    "/Markets": {
+      "get": {
+        "operationId": "getMarkets",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "$filter",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$orderby",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$expand",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$top",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "$skip",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "$format",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "properties": {
+                "value": {
+                  "items": {
+                    "$ref": "#/definitions/Market"
+                  },
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "createMarket",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "Market",
+            "schema": {
+              "$ref": "#/definitions/Market"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "schema": {
+              "$ref": "#/definitions/Market"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/MuyikInsertNewMarketsFunc(MarketLocation='{MarketLocation}',MarketName='{MarketName}',MarketSizeInHectares={MarketSizeInHectares})": {
+      "get": {
+        "operationId": "MuyikInsertNewMarkets",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "MarketLocation",
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "name": "MarketName",
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "name": "MarketSizeInHectares",
+            "type": "number"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "properties": {
+                "value": {
+                  "items": {
+                    "$ref": "#/definitions/MuyikInsertNewMarket"
+                  },
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/SelectAllMarketsFunc()": {
+      "get": {
+        "operationId": "getSelectAllMarkets",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "$filter",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$orderby",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$expand",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$top",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "$skip",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "$format",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "properties": {
+                "value": {
+                  "items": {
+                    "$ref": "#/definitions/SelectAllMarket"
+                  },
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/Markets({MarketListID})": {
+      "delete": {
+        "operationId": "deleteMarket",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "MarketListID",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "204": {},
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "getMarketByMarketListID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "MarketListID",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/Market"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "patch": {
+        "operationId": "updateMarket",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "MarketListID",
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "Market",
+            "schema": {
+              "$ref": "#/definitions/Market"
+            }
+          }
+        ],
+        "responses": {
+          "204": {},
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "cancel": {
+        "operationId": "cancelMarketChanges",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "Market",
+            "schema": {
+              "$ref": "#/definitions/Market"
+            }
+          }
+        ],
+        "responses": {
+          "204": {},
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    }
+  },
+  "basePath": "/odata/conData",
+  "host": "localhost:5000",
+  "schemes": [
+    "http"
+  ]
+}
